@@ -7,7 +7,13 @@ D = date(2026, 10, 24)
 
 
 def prog(**kw):
-    base = dict(merchant="M", rates={"coffee": 5, "default": 1}, first_purchase_bonus=100, catalog={"mug": 300}, daily_cap=10_000)
+    base = dict(
+        merchant="M",
+        rates={"coffee": 5, "default": 1},
+        first_purchase_bonus=100,
+        catalog={"mug": 300},
+        daily_cap=10_000,
+    )
     base.update(kw)
     return Program(**base)
 
@@ -57,7 +63,13 @@ class Tests(unittest.TestCase):
     def test_optimizer_prefers_effective_price(self):
         rich = prog(merchant="Rich", rates={"coffee": 20}, first_purchase_bonus=0, point_value=0.01)
         plain = prog(merchant="Plain", rates={"coffee": 0}, first_purchase_bonus=0)
-        ranked = best_merchant([{"merchant": "Rich", "price": 24}, {"merchant": "Plain", "price": 22}], {"Rich": rich, "Plain": plain}, {}, "coffee", D)
+        ranked = best_merchant(
+            [{"merchant": "Rich", "price": 24}, {"merchant": "Plain", "price": 22}],
+            {"Rich": rich, "Plain": plain},
+            {},
+            "coffee",
+            D,
+        )
         self.assertEqual(ranked[0]["merchant"], "Rich")  # 24 - 4.80 = 19.20 < 22
 
 

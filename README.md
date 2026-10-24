@@ -1,5 +1,7 @@
 # agent-miles
 
+[![CI](https://github.com/eliem08/agent-miles/actions/workflows/ci.yml/badge.svg)](https://github.com/eliem08/agent-miles/actions/workflows/ci.yml)
+
 > **Frequent flyer miles for agents** — loyalty programs built for agents.
 
 When agents do the shopping, brand loyalty breaks: an agent has no
@@ -34,3 +36,25 @@ agent-miles feed > offers.json
 - Program federation: earn at one merchant, redeem at partners (coalition, like airline alliances)
 - Signed feeds so agents can trust the published value (pairs with agent-okta)
 - Agent-specific perks: API-only discounts, priority fulfilment for high-tier agents
+
+## Development
+
+Zero runtime dependencies; Python 3.10+.
+
+```bash
+python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install -e ".[dev]"
+python -m unittest discover -s tests -t .           # unit + CLI smoke tests
+ruff check . && ruff format --check .               # lint + format
+```
+
+```
+agent_miles/core.py       domain logic (pure, importable, fully tested)
+agent_miles/__main__.py   CLI (`agent-miles ...` / `python -m agent_miles ...`)
+tests/                unit tests + generated CLI smoke tests
+```
+
+CI runs lint and tests on Ubuntu and Windows across Python 3.10, 3.12 and 3.13.
+Design, data model, trade-offs and production path: **[ARCHITECTURE.md](ARCHITECTURE.md)**.
+
+Part of the [agent-economy](https://github.com/eliem08/agent-economy) portfolio (idea #39).

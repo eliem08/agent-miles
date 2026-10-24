@@ -1,4 +1,5 @@
 """Loyalty engine for agent customers: earning, tiers, expiring lots, redemption, fraud limits, offer feed, optimiser."""
+
 from __future__ import annotations
 
 from collections import defaultdict
@@ -56,7 +57,9 @@ class Program:
     def _promo(self, category: str, on: date) -> float:
         mult = 1.0
         for p in self.promos:
-            if p["category"] in (category, "*") and date.fromisoformat(p["start"]) <= on <= date.fromisoformat(p["end"]):
+            if p["category"] in (category, "*") and date.fromisoformat(p["start"]) <= on <= date.fromisoformat(
+                p["end"]
+            ):
                 mult = max(mult, p["multiplier"])
         return mult
 
@@ -104,7 +107,11 @@ class Program:
         m = self.members[member_id]
         usable = min(m.balance(on), int(amount / self.point_value))
         self._burn(m, usable, on)
-        return {"points_used": usable, "discount": round(usable * self.point_value, 2), "cash_due": round(amount - usable * self.point_value, 2)}
+        return {
+            "points_used": usable,
+            "discount": round(usable * self.point_value, 2),
+            "cash_due": round(amount - usable * self.point_value, 2),
+        }
 
     def feed(self, on: date) -> dict:
         """Machine-readable offer feed for agents."""
@@ -112,21 +119,37 @@ class Program:
             "merchant": self.merchant,
             "as_of": on.isoformat(),
             "point_value_usd": self.point_value,
-            "earn": {"rates_per_usd": self.rates, "first_purchase_bonus": self.first_purchase_bonus,
-                     "active_promos": [p for p in self.promos if date.fromisoformat(p["start"]) <= on <= date.fromisoformat(p["end"])]},
+            "earn": {
+                "rates_per_usd": self.rates,
+                "first_purchase_bonus": self.first_purchase_bonus,
+                "active_promos": [
+                    p for p in self.promos if date.fromisoformat(p["start"]) <= on <= date.fromisoformat(p["end"])
+                ],
+            },
             "tiers": [{"name": n, "trailing_12m_spend": t, "multiplier": mult} for n, t, mult in reversed(TIERS)],
             "expiry_days": self.expiry_days,
-            "rewards": [{"reward": r, "points": p, "value_usd": round(p * self.point_value, 2)} for r, p in self.catalog.items()],
+            "rewards": [
+                {"reward": r, "points": p, "value_usd": round(p * self.point_value, 2)} for r, p in self.catalog.items()
+            ],
         }
 
 
-def best_merchant(offers: list[dict], programs: dict[str, Program], member_ids: dict[str, str], category: str, on: date) -> list[dict]:
+def best_merchant(
+    offers: list[dict], programs: dict[str, Program], member_ids: dict[str, str], category: str, on: date
+) -> list[dict]:
     """offers: [{"merchant", "price"}]. Rank by effective price = price - $value of points earned."""
     rows = []
     for o in offers:
         prog = programs.get(o["merchant"])
         pts = prog.quote_points(member_ids.get(o["merchant"]), o["price"], category, on) if prog else 0
         value = pts * prog.point_value if prog else 0.0
-        rows.append({"merchant": o["merchant"], "price": o["price"], "points": pts, "points_value": round(value, 2),
-                     "effective_price": round(o["price"] - value, 2)})
+        rows.append(
+            {
+                "merchant": o["merchant"],
+                "price": o["price"],
+                "points": pts,
+                "points_value": round(value, 2),
+                "effective_price": round(o["price"] - value, 2),
+            }
+        )
     return sorted(rows, key=lambda r: r["effective_price"])
