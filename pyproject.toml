@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent-miles"
+version = "0.1.0"
+description = "Frequent flyer miles for agents: loyalty programs built for agents"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+dependencies = []
+
+[project.scripts]
+agent-miles = "agent_miles.__main__:main"
+
+[tool.setuptools]
+packages = ["agent_miles"]
