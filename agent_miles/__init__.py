@@ -1,4 +1,4 @@
-"""Frequent flyer miles for agents: loyalty programs built for agents."""
+"""Agent Miles: A loyalty program built for AI agents that shop."""
 
 from .core import *
 

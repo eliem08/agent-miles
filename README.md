@@ -1,15 +1,44 @@
-# agent-miles
+<!-- sell-kit:start -->
+# Agent Miles
 
 [![CI](https://github.com/eliem08/agent-miles/actions/workflows/ci.yml/badge.svg)](https://github.com/eliem08/agent-miles/actions/workflows/ci.yml)
 
-> **Frequent flyer miles for agents** — loyalty programs built for agents.
+> **A loyalty program built for AI agents that shop.**
 
-When agents do the shopping, brand loyalty breaks: an agent has no
-emotional attachment to your coffee shop. It optimises. So loyalty has to
-become **machine-readable value** that agents can see, compare and redeem.
-`agent-miles` is a loyalty engine designed for agent customers.
+**Who it's for:** Merchants who want agent shoppers to choose them, and agent platforms optimising for users.
 
-## What the MVP does
+**The problem:** Agents compare prices instantly, so merchants need loyalty value that agents can read and factor in.
+
+**What you get:** Point lots with expiry, tiers, fraud and velocity limits, a machine-readable offer feed and an effective-price optimiser for agents.
+
+## Quickstart
+
+Customers receive a release archive with the wheel and the examples. Python 3.10+ and no other dependencies.
+
+```bash
+pip install agent_miles-0.1.0-py3-none-any.whl
+agent-miles demo
+agent-miles feed
+```
+
+## Pricing
+
+Every plan starts with a 14-day free trial. Prices in USD, billed monthly unless noted.
+
+| Plan | Price | Includes |
+|---|---|---|
+| **Merchant** | $99 per month | Up to 10,000 members; Tiers and promos; Offer feed |
+| **Growth** | $499 per month | Unlimited members; Fraud limits; Analytics |
+| **Network** | Custom (contact sales) | Coalition programs; Agent platform integrations; SLA |
+
+To start a trial or buy a plan, email **sales@YOUR-DOMAIN.com**.
+
+## Licence
+
+Proprietary. Copyright (c) 2026 eliem08. All rights reserved. Use requires a paid plan or an active trial; see [LICENSE](LICENSE).
+<!-- sell-kit:end -->
+
+## What it does
 
 - **Earn rules**: points per $ by category, first-purchase bonus, promo
   multipliers with date windows, tier multipliers
@@ -34,7 +63,7 @@ agent-miles feed > offers.json
 ## Roadmap
 
 - Program federation: earn at one merchant, redeem at partners (coalition, like airline alliances)
-- Signed feeds so agents can trust the published value (pairs with agent-okta)
+- Signed feeds so agents can trust the published value (pairs with agentwarden)
 - Agent-specific perks: API-only discounts, priority fulfilment for high-tier agents
 
 ## Development

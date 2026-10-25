@@ -5,16 +5,17 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "agent-miles"
 version = "0.1.0"
-description = "Frequent flyer miles for agents: loyalty programs built for agents"
+description = "A loyalty program built for AI agents that shop."
 readme = "README.md"
 requires-python = ">=3.10"
-license = { text = "MIT" }
+license = { text = "Proprietary" }
 authors = [{ name = "eliem08" }]
 dependencies = []
 classifiers = [
   "Programming Language :: Python :: 3",
-  "License :: OSI Approved :: MIT License",
+  "License :: Other/Proprietary License",
   "Operating System :: OS Independent",
+  "Private :: Do Not Upload",
 ]
 
 [project.optional-dependencies]
