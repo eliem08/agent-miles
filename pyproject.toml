@@ -23,6 +23,7 @@ dev = ["ruff>=0.6"]
 
 [project.scripts]
 agent-miles = "agent_miles.__main__:main"
+agent-miles-web = "agent_miles.web:main"
 
 [project.urls]
 Repository = "https://github.com/eliem08/agent-miles"

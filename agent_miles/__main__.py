@@ -21,11 +21,16 @@ def _sample():
     return beans, grind
 
 
-def _run(argv=None):
+def build_parser():
     ap = argparse.ArgumentParser(prog="agent-miles")
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("demo")
     sub.add_parser("feed")
+    return ap
+
+
+def _run(argv=None):
+    ap = build_parser()
     a = ap.parse_args(argv)
     today = date(2026, 10, 24)
     beans, grind = _sample()
