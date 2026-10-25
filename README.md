@@ -46,7 +46,7 @@ Every plan starts with a 14-day free trial. Prices in USD, billed monthly unless
 | **Growth** | $499 per month | Unlimited members; Fraud limits; Analytics |
 | **Network** | Custom (contact sales) | Coalition programs; Agent platform integrations; SLA |
 
-To start a trial or buy a plan, email **sales@YOUR-DOMAIN.com**.
+To start a trial or buy a plan, [request access](https://github.com/eliem08/agent-miles/issues/new?title=Agent%20Miles%20trial&labels=sales).
 
 ## Licence
 
