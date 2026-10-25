@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 from collections import defaultdict
 from dataclasses import dataclass, field
 from datetime import date, timedelta
@@ -43,6 +44,8 @@ class Program:
     def join(self, member_id: str, referred_by: str | None = None) -> Member:
         if referred_by == member_id:
             raise LoyaltyError("self-referral not allowed")
+        if member_id in self.members:
+            raise LoyaltyError(f"{member_id} is already a member")  # re-joining must not wipe a balance
         self.members[member_id] = Member(member_id, referred_by)
         return self.members[member_id]
 
@@ -72,8 +75,8 @@ class Program:
 
     def purchase(self, member_id: str, amount: float, category: str, on: date) -> int:
         m = self.members[member_id]
-        if amount <= 0:
-            raise LoyaltyError("amount must be positive")
+        if not (math.isfinite(amount) and amount > 0):
+            raise LoyaltyError("amount must be a finite number > 0")
         if sum(1 for d, _ in m.purchases if d == on) >= self.max_purchases_per_day:
             raise LoyaltyError("velocity limit: too many purchases today")
         pts = self.quote_points(member_id, amount, category, on)
@@ -86,6 +89,8 @@ class Program:
         return pts
 
     def _burn(self, m: Member, points: int, on: date):
+        if points < 0:
+            raise LoyaltyError("cannot burn a negative number of points")
         if m.balance(on) < points:
             raise LoyaltyError(f"insufficient points: have {m.balance(on)}, need {points}")
         for lot in sorted(m.lots, key=lambda l: l[1]):  # soonest-expiring first
@@ -105,6 +110,8 @@ class Program:
 
     def pay_with_points(self, member_id: str, amount: float, on: date) -> dict:
         m = self.members[member_id]
+        if not (math.isfinite(amount) and amount > 0):
+            raise LoyaltyError("amount must be a finite number > 0")  # a negative amount would mint points
         usable = min(m.balance(on), int(amount / self.point_value))
         self._burn(m, usable, on)
         return {

@@ -72,6 +72,31 @@ class Tests(unittest.TestCase):
         )
         self.assertEqual(ranked[0]["merchant"], "Rich")  # 24 - 4.80 = 19.20 < 22
 
+    def test_negative_payment_cannot_mint_points(self):
+        p = prog()
+        p.join("a")
+        p.purchase("a", 50, "coffee", D)
+        before = p.members["a"].balance(D)
+        for amount in (-1000, float("nan"), float("inf")):
+            with self.subTest(amount=amount), self.assertRaises(LoyaltyError):
+                p.pay_with_points("a", amount, D)
+        self.assertEqual(p.members["a"].balance(D), before)
+
+    def test_rejoining_does_not_wipe_a_balance(self):
+        p = prog()
+        p.join("a")
+        p.purchase("a", 50, "coffee", D)
+        with self.assertRaises(LoyaltyError):
+            p.join("a")
+        self.assertGreater(p.members["a"].balance(D), 0)
+
+    def test_nan_purchase_is_rejected_cleanly(self):
+        p = prog()
+        p.join("a")
+        for amount in (float("nan"), float("inf")):
+            with self.subTest(amount=amount), self.assertRaises(LoyaltyError):
+                p.purchase("a", amount, "coffee", D)
+
 
 if __name__ == "__main__":
     unittest.main()
