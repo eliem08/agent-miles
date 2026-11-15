@@ -17,8 +17,9 @@ Customers receive a release archive with the wheel and the examples. Python 3.10
 
 ```bash
 pip install agent_miles-0.1.0-py3-none-any.whl
-agent-miles demo
-agent-miles feed
+agent-miles program-init RunCo --rate shoes=3 --store miles.json
+agent-miles reward-add "Free socks" 800 --store miles.json
+agent-miles join shopper-bot --store miles.json
 ```
 
 ## Web app and API
@@ -33,7 +34,7 @@ docker build -t agent-miles . && docker run -p 8000:8000 -e API_KEYS=sk_... -v a
 
 Every API call needs `Authorization: Bearer <key>` once any key exists; a server on a public address refuses to start without one. Calls are rate-limited per key (60/min, `--rate`) and metered: `agent-miles-web usage` prints calls per key for billing.
 
-Endpoints: `POST /api/demo`, `POST /api/feed`, plus `GET /healthz` and `GET /api/spec` (machine-readable field list).
+Endpoints: `POST /api/demo`, `POST /api/feed`, `POST /api/program-init`, `POST /api/reward-add`, `POST /api/promo-add`, `POST /api/join`, `POST /api/purchase`, `POST /api/balance`, `POST /api/redeem`, `POST /api/pay`, `POST /api/offers`, plus `GET /healthz` and `GET /api/spec` (machine-readable field list).
 Files are sent as `{"name": ..., "content": ...}`, folders as `{"files": [...]}` or a base64 zip.
 
 ## Deploy and sell

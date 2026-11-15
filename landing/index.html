@@ -48,8 +48,9 @@
     <h2>Quickstart</h2>
     <p>Python 3.10+, no other dependencies. Your release archive includes the wheel and examples.</p>
     <pre><code>pip install agent_miles-0.1.0-py3-none-any.whl
-agent-miles demo
-agent-miles feed</code></pre>
+agent-miles program-init RunCo --rate shoes=3 --store miles.json
+agent-miles reward-add &quot;Free socks&quot; 800 --store miles.json
+agent-miles join shopper-bot --store miles.json</code></pre>
   </section>
   <section>
     <h2>Pricing</h2>

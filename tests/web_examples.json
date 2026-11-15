@@ -1,5 +1,54 @@
 [
  {
+  "op": "program-init",
+  "payload": {
+   "merchant": "RunCo",
+   "rate": [
+    "shoes=3"
+   ],
+   "point_value": 0.01,
+   "first_purchase_bonus": 500
+  }
+ },
+ {
+  "op": "reward-add",
+  "payload": {
+   "reward": "Free socks",
+   "points": 800
+  }
+ },
+ {
+  "op": "join",
+  "payload": {
+   "member": "shopper-bot"
+  }
+ },
+ {
+  "op": "purchase",
+  "payload": {
+   "member": "shopper-bot",
+   "amount": 120.0,
+   "category": "shoes"
+  }
+ },
+ {
+  "op": "balance",
+  "payload": {
+   "member": "shopper-bot"
+  }
+ },
+ {
+  "op": "redeem",
+  "payload": {
+   "member": "shopper-bot",
+   "reward": "Free socks"
+  }
+ },
+ {
+  "op": "offers",
+  "payload": {}
+ },
+ {
   "op": "demo",
   "payload": {}
  },

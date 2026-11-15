@@ -6,6 +6,7 @@ import sys
 from datetime import date
 
 from .core import Program, best_merchant
+from .ops import OPS, add_ops, run_ops
 
 
 def _sample():
@@ -26,12 +27,15 @@ def build_parser():
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("demo")
     sub.add_parser("feed")
+    add_ops(sub)
     return ap
 
 
 def _run(argv=None):
     ap = build_parser()
     a = ap.parse_args(argv)
+    if a.cmd in OPS:
+        return run_ops(a)
     today = date(2026, 10, 24)
     beans, grind = _sample()
     if a.cmd == "feed":
