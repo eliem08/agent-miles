@@ -3,7 +3,7 @@
 import json
 import os
 from collections import defaultdict
-from dataclasses import asdict
+from dataclasses import fields
 from datetime import date
 
 from .core import LoyaltyError, Member, Program
@@ -41,7 +41,8 @@ def load(path: str) -> Program | None:
 
 
 def save(p: Program, path: str):
-    doc = asdict(p)
+    # not asdict(p): on Python 3.10 it cannot copy the members' defaultdicts
+    doc = {f.name: getattr(p, f.name) for f in fields(p) if f.name != "members"}
     doc["members"] = {
         mid: {
             "referred_by": m.referred_by,
