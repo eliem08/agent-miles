@@ -411,4 +411,19 @@ SPEC = {
             "id": "offers",
         },
     ],
+    "plans": [
+        {
+            "key": "merchant",
+            "name": "Merchant",
+            "price": "$99 per month",
+            "features": ["Up to 10,000 members", "Tiers and promos", "Offer feed"],
+        },
+        {
+            "key": "growth",
+            "name": "Growth",
+            "price": "$499 per month",
+            "features": ["Unlimited members", "Fraud limits", "Points redemption at checkout"],
+        },
+        {"key": "network", "name": "Network", "price": "Contact sales", "features": ["Dedicated support", "SLA"]},
+    ],
 }
